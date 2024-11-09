@@ -1,0 +1,29 @@
+class Nodo:
+    def __init__(self, valor):
+        self.valor = valor
+        self.izquierda = None
+        self.derecha = None
+
+# Construcción del árbol
+raiz = Nodo(1)
+raiz.izquierda = Nodo(5)
+raiz.derecha = Nodo(3)
+raiz.izquierda.izquierda = Nodo(7)
+raiz.izquierda.derecha = Nodo(2)
+raiz.derecha.izquierda = Nodo(8)
+raiz.derecha.derecha = Nodo(4)
+
+def maximo_postorden(nodo):
+    if nodo is None:
+        return float('-inf')  # Caso base: menor valor posible si el nodo es None
+    
+    # Recorrido en postorden: izquierda, derecha, nodo actual
+    max_izquierda = maximo_postorden(nodo.izquierda)
+    max_derecha = maximo_postorden(nodo.derecha)
+    
+    # Retornamos el valor máximo entre el nodo actual y los subárboles
+    return max(nodo.valor, max_izquierda, max_derecha)
+
+# Llamada a la función
+resultado = maximo_postorden(raiz)
+print("El valor máximo en el árbol es:", resultado)
