@@ -1,0 +1,29 @@
+def busqueda_binaria(estudiantes, estudiante_buscado):
+    izquierda, derecha = 0, len(estudiantes) - 1
+
+    while izquierda <= derecha:
+        # Calculamos el punto medio
+        medio = (izquierda + derecha) // 2
+
+        # Comparamos el estudiante en el medio con el buscado
+        if estudiantes[medio] == estudiante_buscado:
+            return medio  # Retornamos el índice del estudiante encontrado
+        elif estudiantes[medio] < estudiante_buscado:
+            izquierda = medio + 1  # El estudiante buscado está en la mitad derecha
+        else:
+            derecha = medio - 1  # El estudiante buscado está en la mitad izquierda
+    
+    # Si llegamos aquí, es que el estudiante no está en la lista
+    return None
+
+# Ejemplo de uso:
+estudiantes = ["Ana", "Carlos", "Juan", "Luis", "Marta", "Pedro", "Sofia"]
+estudiante_buscado = "Marta"
+
+# Llamamos a la función de búsqueda binaria
+resultado = busqueda_binaria(estudiantes, estudiante_buscado)
+
+if resultado is not None:
+    print(f"El estudiante {estudiante_buscado} se encuentra en el índice {resultado}.")
+else:
+    print(f"El estudiante {estudiante_buscado} no está en la lista.")
