@@ -1,0 +1,33 @@
+def operaciones_matematicas(valores):
+    try:
+        # Realizar operaciones con la lista de valores
+        suma = sum(valores)
+        resta = valores[0] - sum(valores[1:])
+        multiplicacion = 1
+        for valor in valores:
+            multiplicacion *= valor
+        division = valores[0]
+        for valor in valores[1:]:
+            division /= valor
+        
+        # Mostrar resultados
+        print(f"Suma: {suma}")
+        print(f"Resta: {resta}")
+        print(f"Multiplicación: {multiplicacion}")
+        print(f"División: {division}")
+    
+    except ZeroDivisionError:
+        # Manejar división por cero
+        print("Error: Se intentó dividir por cero.")
+    
+    except TypeError:
+        # Manejar tipo de dato incorrecto
+        print("Error: Todos los elementos deben ser números.")
+    
+    except ValueError:
+        # Manejar valor incorrecto en la lista
+        print("Error: Hubo un problema con los valores en la lista.")
+    
+# Ejemplo de uso
+valores = [10, 5, 3]  # Puedes modificar la lista de valores
+operaciones_matematicas(valores)
