@@ -1,0 +1,35 @@
+def buscar_libros_por_autor(nombre_autor):
+    # Lista para almacenar los títulos de los libros encontrados
+    libros_encontrados = []
+    
+    try:
+        # Abrimos el archivo libros.txt en modo de lectura
+        with open("libros.txt", "r") as archivo:
+            for linea in archivo:
+                # Eliminamos espacios y saltos de línea al principio y al final de la línea
+                linea = linea.strip()
+                
+                # Dividimos la línea en libro y autor (se asume que la coma es el separador)
+                if ',' in linea:
+                    libro, autor = linea.split(",", 1)
+                    libro = libro.strip()  # Eliminamos posibles espacios en el nombre del libro
+                    autor = autor.strip()  # Eliminamos posibles espacios en el nombre del autor
+                    
+                    # Si el autor coincide con el nombre proporcionado, agregamos el libro a la lista
+                    if autor.lower() == nombre_autor.lower():
+                        libros_encontrados.append(libro)
+        
+        # Mostrar los resultados
+        if libros_encontrados:
+            print(f"Libros escritos por {nombre_autor}:")
+            for libro in libros_encontrados:
+                print(f"- {libro}")
+        else:
+            print(f"No se encontraron libros escritos por {nombre_autor}.")
+    
+    except FileNotFoundError:
+        print("El archivo 'libros.txt' no se encuentra.")
+
+# Ejemplo de uso:
+autor_buscado = input("Ingrese el nombre del autor: ")
+buscar_libros_por_autor(autor_buscado)
