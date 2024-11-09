@@ -1,0 +1,27 @@
+def buscar_calificacion(matriz, calificacion_buscada):
+    # Recorremos la matriz (cada fila es un estudiante)
+    for i, fila in enumerate(matriz):
+        # Recorremos cada calificación en la fila (cada columna es una materia)
+        for j, calificacion in enumerate(fila):
+            if calificacion == calificacion_buscada:
+                # Devolvemos el índice del estudiante (i) y el índice de la materia (j)
+                return i, j
+    # Si no encontramos la calificación, devolvemos None
+    return None
+
+# Ejemplo de uso:
+matriz_calificaciones = [
+    [85, 90, 78],  # Estudiante 1 (Materia 1: 85, Materia 2: 90, Materia 3: 78)
+    [88, 92, 79],  # Estudiante 2
+    [80, 70, 75],  # Estudiante 3
+]
+
+calificacion_buscada = 92
+
+resultado = buscar_calificacion(matriz_calificaciones, calificacion_buscada)
+
+if resultado:
+    estudiante, materia = resultado
+    print(f"La calificación {calificacion_buscada} se encuentra en el estudiante {estudiante + 1}, materia {materia + 1}.")
+else:
+    print(f"La calificación {calificacion_buscada} no se encontró.")
