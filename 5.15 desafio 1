@@ -1,0 +1,19 @@
+class Nodo:
+    def __init__(self, valor):
+        self.valor = valor
+        self.izquierda = None
+        self.derecha = None
+
+# Construcción del árbol
+# Nivel 1 (Raíz)
+raiz = Nodo(1)
+
+# Nivel 2
+raiz.izquierda = Nodo(2)
+raiz.derecha = Nodo(3)
+
+# Nivel 3
+raiz.izquierda.izquierda = Nodo(4)
+raiz.izquierda.derecha = Nodo(5)
+raiz.derecha.izquierda = Nodo(6)
+raiz.derecha.derecha = Nodo(7)
