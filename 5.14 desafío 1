@@ -1,0 +1,20 @@
+def pedir_numeros():
+    try:
+        # Solicitar dos números enteros al usuario
+        num1 = int(input("Introduce el primer número entero: "))
+        num2 = int(input("Introduce el segundo número entero: "))
+        
+        # Intentar realizar la división
+        resultado = num1 / num2
+        print(f"El resultado de la división es: {resultado}")
+        
+    except ZeroDivisionError:
+        # Manejar el error de división por cero
+        print("Error: No se puede dividir por cero.")
+        
+    except ValueError:
+        # Manejar el error de valores no numéricos
+        print("Error: Debes introducir números enteros válidos.")
+        
+# Llamar a la función
+pedir_numeros()
