@@ -1,0 +1,30 @@
+def ordenar_por_seleccion(estudiantes):
+    # Recorremos la lista de estudiantes
+    for i in range(len(estudiantes)):
+        # Suponemos que el estudiante en la posición i es el de mayor promedio
+        max_index = i
+        for j in range(i + 1, len(estudiantes)):
+            # Comparamos los promedios
+            if estudiantes[j][1] > estudiantes[max_index][1]:
+                # Si encontramos un estudiante con un promedio mayor, actualizamos max_index
+                max_index = j
+        # Intercambiamos el estudiante actual con el de mayor promedio encontrado
+        estudiantes[i], estudiantes[max_index] = estudiantes[max_index], estudiantes[i]
+
+# Ejemplo de uso:
+estudiantes = [
+    ("Ana", 85.6),
+    ("Carlos", 92.3),
+    ("Juan", 78.4),
+    ("Luis", 88.5),
+    ("Marta", 91.2),
+    ("Pedro", 80.1)
+]
+
+# Llamamos a la función de ordenamiento por selección
+ordenar_por_seleccion(estudiantes)
+
+# Imprimimos la lista de estudiantes ordenada
+print("Estudiantes ordenados por promedio (de mayor a menor):")
+for estudiante, promedio in estudiantes:
+    print(f"{estudiante}: {promedio}")
