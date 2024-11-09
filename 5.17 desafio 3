@@ -1,0 +1,52 @@
+import csv
+
+def actualizar_inventario():
+    # Pedimos al usuario el nombre del libro y la nueva cantidad de copias
+    nombre_libro = input("Ingrese el nombre del libro a actualizar: ")
+    nuevas_copias = input("Ingrese la nueva cantidad de copias: ")
+    
+    # Convertimos la cantidad de copias a un número entero
+    try:
+        nuevas_copias = int(nuevas_copias)
+    except ValueError:
+        print("La cantidad de copias debe ser un número entero.")
+        return
+    
+    # Lista para almacenar los datos modificados
+    libros_actualizados = []
+    libro_encontrado = False
+    
+    # Abrimos el archivo inventario.csv en modo lectura
+    try:
+        with open('inventario.csv', mode='r', newline='', encoding='utf-8') as archivo:
+            lector = csv.reader(archivo)
+            # Leemos todas las filas y las almacenamos en libros_actualizados
+            for fila in lector:
+                libro, copias = fila
+                if libro.lower() == nombre_libro.lower():
+                    # Si encontramos el libro, actualizamos la cantidad de copias
+                    libros_actualizados.append([libro, str(nuevas_copias)])
+                    libro_encontrado = True
+                else:
+                    # Si no es el libro buscado, simplemente lo agregamos sin cambios
+                    libros_actualizados.append([libro, copias])
+        
+        # Si no se encontró el libro, informamos al usuario
+        if not libro_encontrado:
+            print(f"No se encontró el libro '{nombre_libro}' en el inventario.")
+            return
+        
+        # Escribimos los datos actualizados en el archivo
+        with open('inventario.csv', mode='w', newline='', encoding='utf-8') as archivo:
+            escritor = csv.writer(archivo)
+            escritor.writerows(libros_actualizados)
+        
+        print(f"La cantidad de copias del libro '{nombre_libro}' ha sido actualizada.")
+    
+    except FileNotFoundError:
+        print("El archivo 'inventario.csv' no se encuentra.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+
+# Ejemplo de uso
+actualizar_inventario()
