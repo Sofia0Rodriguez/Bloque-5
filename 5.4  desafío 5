@@ -1,0 +1,18 @@
+def leer_archivo():
+    try:
+        # Utilizando 'with' para abrir el archivo, que asegura que el archivo se cierre automáticamente
+        with open('archivo.txt', 'r') as archivo:
+            contenido = archivo.read()  # Leer todo el contenido del archivo
+            print("Contenido del archivo:")
+            print(contenido)
+    
+    except FileNotFoundError:
+        # Manejar el caso en que el archivo no existe
+        print("Error: El archivo no se encuentra.")
+    
+    except Exception as e:
+        # Manejar cualquier otro tipo de error
+        print(f"Error inesperado: {e}")
+
+# Llamada a la función
+leer_archivo()
