@@ -1,0 +1,43 @@
+def eliminar_prestamo():
+    # Paso 1: Leer el archivo 'prestamos.txt' y mostrar los registros
+    try:
+        with open('prestamos.txt', 'r', encoding='utf-8') as archivo:
+            prestamos = archivo.readlines()
+
+        # Verificamos si el archivo está vacío
+        if not prestamos:
+            print("No hay préstamos registrados en el archivo.")
+            return
+
+        # Mostramos los préstamos actuales al usuario
+        print("\nRegistros de préstamos:")
+        for idx, prestamo in enumerate(prestamos, 1):
+            print(f"{idx}. {prestamo.strip()}")
+
+        # Paso 2: Permitir al usuario seleccionar cuál eliminar
+        try:
+            seleccion = int(input("\nSeleccione el número del préstamo que desea eliminar: "))
+            
+            if seleccion < 1 or seleccion > len(prestamos):
+                print("Selección inválida. No existe un préstamo con ese número.")
+                return
+
+            # Eliminar el préstamo seleccionado
+            prestamos.pop(seleccion - 1)
+
+            # Paso 3: Actualizar el archivo 'prestamos.txt' con los préstamos restantes
+            with open('prestamos.txt', 'w', encoding='utf-8') as archivo:
+                archivo.writelines(prestamos)
+
+            print("El préstamo ha sido eliminado correctamente.")
+
+        except ValueError:
+            print("Debe ingresar un número válido.")
+    
+    except FileNotFoundError:
+        print("El archivo 'prestamos.txt' no se encuentra.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+
+# Ejemplo de uso:
+eliminar_prestamo()
