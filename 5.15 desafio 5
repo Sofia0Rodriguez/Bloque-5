@@ -1,0 +1,72 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def build_expression_tree(expression):
+    # Función para construir el árbol de expresión a partir de la cadena dada
+    def precedence(op):
+        if op in ('+', '-'):
+            return 1
+        if op in ('*', '/'):
+            return 2
+        return 0
+
+    def apply_operation(op, left, right):
+        node = Node(op)
+        node.left = left
+        node.right = right
+        return node
+
+    values = []
+    operators = []
+    i = 0
+    while i < len(expression):
+        if expression[i].isdigit():
+            j = i
+            while j < len(expression) and expression[j].isdigit():
+                j += 1
+            values.append(Node(int(expression[i:j])))
+            i = j
+        elif expression[i] in '+-*/':
+            while (operators and precedence(operators[-1]) >= precedence(expression[i])):
+                op = operators.pop()
+                right = values.pop()
+                left = values.pop()
+                values.append(apply_operation(op, left, right))
+            operators.append(expression[i])
+            i += 1
+        else:
+            i += 1
+
+    while operators:
+        op = operators.pop()
+        right = values.pop()
+        left = values.pop()
+        values.append(apply_operation(op, left, right))
+
+    return values[0]
+
+def evaluate_tree(node):
+    if node is None:
+        return 0
+    if node.left is None and node.right is None:
+        return node.value
+    left_val = evaluate_tree(node.left)
+    right_val = evaluate_tree(node.right)
+
+    if node.value == '+':
+        return left_val + right_val
+    elif node.value == '-':
+        return left_val - right_val
+    elif node.value == '*':
+        return left_val * right_val
+    elif node.value == '/':
+        return left_val / right_val
+
+# Prueba del programa
+expression = "5 + 3 * 4"
+tree = build_expression_tree(expression)
+result = evaluate_tree(tree)
+print("Resultado:", result)  # Debería imprimir: Resultado: 17
