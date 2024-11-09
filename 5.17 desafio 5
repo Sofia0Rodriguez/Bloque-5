@@ -1,0 +1,35 @@
+import string
+from collections import Counter
+
+def contar_palabras_mas_comunes(archivo):
+    try:
+        # Abrimos el archivo en modo de lectura
+        with open(archivo, 'r', encoding='utf-8') as f:
+            # Inicializamos el contador de palabras
+            contador_palabras = Counter()
+
+            # Procesamos el archivo línea por línea
+            for linea in f:
+                # Convertimos la línea a minúsculas y eliminamos los signos de puntuación
+                linea = linea.lower()
+                # Eliminamos los signos de puntuación usando str.translate
+                linea = linea.translate(str.maketrans('', '', string.punctuation))
+                # Separamos las palabras por espacios
+                palabras = linea.split()
+
+                # Actualizamos el contador con las palabras de la línea
+                contador_palabras.update(palabras)
+
+        # Mostramos las 5 palabras más comunes
+        print("Las 5 palabras más comunes son:")
+        for palabra, cantidad in contador_palabras.most_common(5):
+            print(f"{palabra}: {cantidad} veces")
+
+    except FileNotFoundError:
+        print(f"El archivo '{archivo}' no se encuentra.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+
+# Ejemplo de uso
+archivo = 'libros.txt'  # Suponiendo que este archivo existe en el mismo directorio
+contar_palabras_mas_comunes(archivo)
