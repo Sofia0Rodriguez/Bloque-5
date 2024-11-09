@@ -1,0 +1,63 @@
+class Nodo:
+    def __init__(self, estudiante, promedio):
+        self.estudiante = estudiante  # Nombre del estudiante
+        self.promedio = promedio      # Promedio del estudiante
+        self.izquierda = None         # Subárbol izquierdo
+        self.derecha = None           # Subárbol derecho
+
+class ArbolBinarioBusqueda:
+    def __init__(self):
+        self.raiz = None
+    
+    def insertar(self, estudiante, promedio):
+        # Inserta un nodo en el árbol
+        if self.raiz is None:
+            self.raiz = Nodo(estudiante, promedio)
+        else:
+            self._insertar(self.raiz, estudiante, promedio)
+    
+    def _insertar(self, nodo, estudiante, promedio):
+        if promedio < nodo.promedio:
+            if nodo.izquierda is None:
+                nodo.izquierda = Nodo(estudiante, promedio)
+            else:
+                self._insertar(nodo.izquierda, estudiante, promedio)
+        else:
+            if nodo.derecha is None:
+                nodo.derecha = Nodo(estudiante, promedio)
+            else:
+                self._insertar(nodo.derecha, estudiante, promedio)
+    
+    def recorrido_inorden(self):
+        # Realiza un recorrido en inorden
+        self._recorrido_inorden(self.raiz)
+    
+    def _recorrido_inorden(self, nodo):
+        if nodo is not None:
+            # Primero recorre el subárbol izquierdo
+            self._recorrido_inorden(nodo.izquierda)
+            # Luego procesa el nodo actual
+            print(f"{nodo.estudiante}: {nodo.promedio}")
+            # Luego recorre el subárbol derecho
+            self._recorrido_inorden(nodo.derecha)
+
+# Ejemplo de uso:
+estudiantes = [
+    ("Ana", 85.6),
+    ("Carlos", 92.3),
+    ("Juan", 78.4),
+    ("Luis", 88.5),
+    ("Marta", 91.2),
+    ("Pedro", 80.1)
+]
+
+# Crear un árbol binario de búsqueda
+arbol = ArbolBinarioBusqueda()
+
+# Insertar estudiantes en el árbol
+for estudiante, promedio in estudiantes:
+    arbol.insertar(estudiante, promedio)
+
+# Realizar el recorrido en inorden para mostrar los estudiantes en orden ascendente de promedio
+print("Estudiantes ordenados por promedio:")
+arbol.recorrido_inorden()
