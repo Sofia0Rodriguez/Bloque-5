@@ -1,0 +1,59 @@
+from collections import deque
+
+class Nodo:
+    def __init__(self, grado, estudiantes):
+        self.grado = grado
+        self.estudiantes = estudiantes
+        self.izquierda = None
+        self.derecha = None
+
+def recorrido_por_niveles_descendente(raiz):
+    if raiz is None:
+        return
+    
+    # Usamos una cola para manejar el orden de los nodos por nivel
+    queue = deque([raiz])
+    resultado = []  # Para almacenar los resultados
+
+    # Realizamos el recorrido por niveles
+    while queue:
+        # Nivel actual
+        nivel_actual = []
+        for _ in range(len(queue)):
+            nodo_actual = queue.popleft()
+            nivel_actual.append((nodo_actual.grado, nodo_actual.estudiantes))
+            
+            # Añadimos los hijos (izquierdo y derecho) del nodo actual a la cola
+            if nodo_actual.izquierda:
+                queue.append(nodo_actual.izquierda)
+            if nodo_actual.derecha:
+                queue.append(nodo_actual.derecha)
+        
+        # Agregar al resultado en orden inverso (nivel más alto primero)
+        resultado.append(nivel_actual)
+
+    # Mostrar los estudiantes, empezando desde el nivel más alto (nivel 12)
+    for nivel in reversed(resultado):
+        for grado, estudiantes in nivel:
+            print(f"Grado {grado}: {', '.join(estudiantes)}")
+
+# Ejemplo de uso:
+# Crear los nodos
+nodo1 = Nodo(1, ['Juan', 'Ana', 'Pedro'])
+nodo2 = Nodo(2, ['Maria', 'Luis'])
+nodo3 = Nodo(3, ['Carlos', 'Luisa', 'Sofia'])
+nodo4 = Nodo(4, ['Luis', 'Marta'])
+nodo5 = Nodo(5, ['Carlos', 'Sofia'])
+
+# Establecer las relaciones entre nodos (por ejemplo, de forma descendente de grado)
+nodo12 = Nodo(12, ['Esteban', 'Paula'])
+nodo11 = Nodo(11, ['Fernando', 'Lucia'])
+
+# Construir el árbol de grados
+nodo12.izquierda = nodo11
+nodo11.izquierda = nodo10 = Nodo(10, ['Carlos', 'Joaquín'])
+nodo10.derecha = Nodo(9, ['Luis', 'Elena'])
+nodo10.derecha.izquierda = Nodo(8, ['Julio', 'Alicia'])
+
+# Realizar el recorrido por niveles
+recorrido_por_niveles_descendente(nodo12)
